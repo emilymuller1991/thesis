@@ -136,9 +136,9 @@ df_2021 = df_2021[['Unnamed: 0.1', 'clusters', 'clusters_2021_edited', 'clusters
 df_2021['idx'] = df_2021['Unnamed: 0.1'].apply(lambda x : int(x[:-2]))
 
 # get merged oa counts
-df_2011_oa = pd.read_csv('outputs/2011_panoids_merged_to_oa.csv')
-df_2018_oa = pd.read_csv('outputs/2018_panoids_merged_to_oa.csv')
-df_2021_oa = pd.read_csv('outputs/2021_panoids_merged_to_oa.csv')
+df_2011_oa = pd.read_csv('chapter3data/outputs/2011_panoids_merged_to_oa.csv')
+df_2018_oa = pd.read_csv('chapter3data/outputs/2018_panoids_merged_to_oa.csv')
+df_2021_oa = pd.read_csv('chapter3data/outputs/2021_panoids_merged_to_oa.csv')
 
 df_2011_ = df_2011.merge(df_2011_oa[['oa_name', 'idx']], left_on='idx', right_on='idx' )
 df_2011_ = df_2011_.drop_duplicates()
@@ -252,133 +252,133 @@ for feature in features:
 
 merge_all.to_csv('outputs/cluster_proportions_2011_2021_sql_absolute_lsoa_keep_interesting.csv')
 
-################################################# QUARTILES
-df_2021_oa_quart = df_2021_oa.copy()
-for column in list(df_2021_oa.columns[:-1]):
-    df_2021_oa_quart[column] = pd.cut(df_2021_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
+# ################################################# QUARTILES
+# df_2021_oa_quart = df_2021_oa.copy()
+# for column in list(df_2021_oa.columns[:-1]):
+#     df_2021_oa_quart[column] = pd.cut(df_2021_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
 
-df_2011_oa_quart = df_2011_oa.copy()
-for column in list(df_2011_oa.columns[:-1]):
-    df_2011_oa_quart[column] = pd.cut(df_2011_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
+# df_2011_oa_quart = df_2011_oa.copy()
+# for column in list(df_2011_oa.columns[:-1]):
+#     df_2011_oa_quart[column] = pd.cut(df_2011_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
 
-merge_all = df_2011_oa_quart.merge(df_2021_oa_quart, on='oa_name_')
+# merge_all = df_2011_oa_quart.merge(df_2021_oa_quart, on='oa_name_')
 
-features = list(prop.index)
-for feature in features:
-    new_column = 'proportion_%s' % feature
-    t0_column = 'clusters_2011_cleanup_%s' % feature
-    t1_column = 'clusters_2021_cleanup_%s' % feature
-    merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
+# features = list(prop.index)
+# for feature in features:
+#     new_column = 'proportion_%s' % feature
+#     t0_column = 'clusters_2011_cleanup_%s' % feature
+#     t1_column = 'clusters_2021_cleanup_%s' % feature
+#     merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
 
-merge_all.to_csv('outputs/cluster_quartiles_2011_2021_sql.csv')
+# merge_all.to_csv('outputs/cluster_quartiles_2011_2021_sql.csv')
 
-################################################# DECILES
-df_2021_oa_dec = df_2021_oa.copy()
-for column in list(df_2021_oa.columns[:-1]):
-    df_2021_oa_dec[column] = pd.cut(df_2021_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
+# ################################################# DECILES
+# df_2021_oa_dec = df_2021_oa.copy()
+# for column in list(df_2021_oa.columns[:-1]):
+#     df_2021_oa_dec[column] = pd.cut(df_2021_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
 
-df_2011_oa_dec = df_2011_oa.copy()
-for column in list(df_2011_oa.columns[:-1]):
-    df_2011_oa_dec[column] = pd.cut(df_2011_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
+# df_2011_oa_dec = df_2011_oa.copy()
+# for column in list(df_2011_oa.columns[:-1]):
+#     df_2011_oa_dec[column] = pd.cut(df_2011_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
 
-merge_all = df_2011_oa_dec.merge(df_2021_oa_dec, on='oa_name_')
+# merge_all = df_2011_oa_dec.merge(df_2021_oa_dec, on='oa_name_')
 
-features = list(prop.index)
-for feature in features:
-    new_column = 'proportion_%s' % feature
-    t0_column = 'clusters_2011_cleanup_%s' % feature
-    t1_column = 'clusters_2021_cleanup_%s' % feature
-    merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
+# features = list(prop.index)
+# for feature in features:
+#     new_column = 'proportion_%s' % feature
+#     t0_column = 'clusters_2011_cleanup_%s' % feature
+#     t1_column = 'clusters_2021_cleanup_%s' % feature
+#     merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
 
-merge_all.to_csv('outputs/cluster_deciles_2011_2021.csv')
+# merge_all.to_csv('outputs/cluster_deciles_2011_2021.csv')
 
-################################################ ADD ERROR TO MEASUREMENT
-# proportions dataframe
-df_2021_oa 
-df_2011_oa 
+# ################################################ ADD ERROR TO MEASUREMENT
+# # proportions dataframe
+# df_2021_oa 
+# df_2011_oa 
 
-# get associated errors  - there are no output areas with zero counts!
-df_2021_oa_counts = df_2021_class.groupby('oa_name').count()
-df_2021_err = {}
-for column in list(df_2021_oa.columns[:-1]):
-    eps = 0.01
-    p = df_2021_oa[column] + eps
-    n = df_2021_oa_counts[column]
-    perr = np.sqrt(np.abs(p*(1-p))/n)
-    df_2021_err[column] = perr
-df_2021_err = pd.DataFrame(df_2021_err)
+# # get associated errors  - there are no output areas with zero counts!
+# df_2021_oa_counts = df_2021_class.groupby('oa_name').count()
+# df_2021_err = {}
+# for column in list(df_2021_oa.columns[:-1]):
+#     eps = 0.01
+#     p = df_2021_oa[column] + eps
+#     n = df_2021_oa_counts[column]
+#     perr = np.sqrt(np.abs(p*(1-p))/n)
+#     df_2021_err[column] = perr
+# df_2021_err = pd.DataFrame(df_2021_err)
 
-# get associated errors  - there are no output areas with zero counts!
-df_2011_oa_counts = df_2011_class.groupby('oa_name').count()
-df_2011_err = {}
-for column in list(df_2011_oa.columns[:-1]):
-    eps = 0.01
-    p = df_2011_oa[column] + eps
-    n = df_2011_oa_counts[column]
-    perr = np.sqrt(np.abs(p*(1-p))/n)
-    df_2011_err[column] = perr
-df_2011_err = pd.DataFrame(df_2011_err)
+# # get associated errors  - there are no output areas with zero counts!
+# df_2011_oa_counts = df_2011_class.groupby('oa_name').count()
+# df_2011_err = {}
+# for column in list(df_2011_oa.columns[:-1]):
+#     eps = 0.01
+#     p = df_2011_oa[column] + eps
+#     n = df_2011_oa_counts[column]
+#     perr = np.sqrt(np.abs(p*(1-p))/n)
+#     df_2011_err[column] = perr
+# df_2011_err = pd.DataFrame(df_2011_err)
 
-# save mask dataframe for certainty estimates in 2011 + 202
-for mu in [0.5,0.75,0.9]:
-    mask = {}
-    for column in list(df_2021_oa.columns[:-1]):
-        f = column.split('_')[-1]
-        f_2011 = 'clusters_2011_cleanup_%s' %f
-        f_2021 = 'clusters_2021_cleanup_%s' %f
-        threshold_11 = pd.qcut(df_2011_err[f_2011],[mu], retbins=True)[1][0]
-        threshold_21 = pd.qcut(df_2021_err[f_2021],[mu], retbins=True)[1][0]
-        mask[f] = df_2011_err[f_2011].apply(lambda x: 0 if x <= threshold_11 else 1) + df_2021_err[f_2021].apply(lambda x: 0 if x <= threshold_21 else 1)
-    df_mask = pd.DataFrame(mask) 
-    df_mask.to_csv('outputs/uncertainty_mask_%s.csv' % str(mu) )    
+# # save mask dataframe for certainty estimates in 2011 + 202
+# for mu in [0.5,0.75,0.9]:
+#     mask = {}
+#     for column in list(df_2021_oa.columns[:-1]):
+#         f = column.split('_')[-1]
+#         f_2011 = 'clusters_2011_cleanup_%s' %f
+#         f_2021 = 'clusters_2021_cleanup_%s' %f
+#         threshold_11 = pd.qcut(df_2011_err[f_2011],[mu], retbins=True)[1][0]
+#         threshold_21 = pd.qcut(df_2021_err[f_2021],[mu], retbins=True)[1][0]
+#         mask[f] = df_2011_err[f_2011].apply(lambda x: 0 if x <= threshold_11 else 1) + df_2021_err[f_2021].apply(lambda x: 0 if x <= threshold_21 else 1)
+#     df_mask = pd.DataFrame(mask) 
+#     df_mask.to_csv('outputs/uncertainty_mask_%s.csv' % str(mu) )    
 
-for mu in [0.5,0.75,0.9]:
-    mask = {}
-    for column in list(df_2021_oa.columns[:-1]):
-        threshold = pd.qcut(df_2021_err[column],[mu], retbins=True)[1][0]
-        mask[column] = df_2021_err[column].apply(lambda x: 0 if x <= threshold else 1)
-    df_mask = pd.DataFrame(mask) 
-    df_mask.to_csv('outputs/2021_uncertainty_mask_%s.csv' % str(mu) )   
+# for mu in [0.5,0.75,0.9]:
+#     mask = {}
+#     for column in list(df_2021_oa.columns[:-1]):
+#         threshold = pd.qcut(df_2021_err[column],[mu], retbins=True)[1][0]
+#         mask[column] = df_2021_err[column].apply(lambda x: 0 if x <= threshold else 1)
+#     df_mask = pd.DataFrame(mask) 
+#     df_mask.to_csv('outputs/2021_uncertainty_mask_%s.csv' % str(mu) )   
 
-############################################################################################### LSOA
-df_2011_oa = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_single_merged_oa.csv')
-df_2018_oa = pd.read_csv('/home/emily/phd/2_interpretability/2018_all_perception_scores_merged_oa.csv')
-df_2021_oa = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_single_merged_oa.csv')
+# ############################################################################################### LSOA
+# df_2011_oa = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_single_merged_oa.csv')
+# df_2018_oa = pd.read_csv('/home/emily/phd/2_interpretability/2018_all_perception_scores_merged_oa.csv')
+# df_2021_oa = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_single_merged_oa.csv')
 
-df_2011_ = df_2011.merge(df_2011_oa[['LSoa_name', 'idx']], left_on='idx', right_on='idx' )
-df_2011_ = df_2011_.drop_duplicates()
-df_2018_ = df_2018.merge(df_2018_oa[['LSoa_name', 'idx']], left_on='idx', right_on='idx' )
-df_2018_ = df_2018_.drop_duplicates()
-df_2021_ = df_2021.merge(df_2021_oa[['LSoa_name', 'idx']], left_on='idx', right_on='idx' )
-df_2021_ = df_2021_.drop_duplicates()
+# df_2011_ = df_2011.merge(df_2011_oa[['LSoa_name', 'idx']], left_on='idx', right_on='idx' )
+# df_2011_ = df_2011_.drop_duplicates()
+# df_2018_ = df_2018.merge(df_2018_oa[['LSoa_name', 'idx']], left_on='idx', right_on='idx' )
+# df_2018_ = df_2018_.drop_duplicates()
+# df_2021_ = df_2021.merge(df_2021_oa[['LSoa_name', 'idx']], left_on='idx', right_on='idx' )
+# df_2021_ = df_2021_.drop_duplicates()
 
-# one hot encode classes 2011
-df_2011_class = pd.get_dummies(df_2011_[['clusters_2011_cleanup']])
-df_2011_class['LSoa_name'] = df_2011_[['LSoa_name']]
-df_2011_oa = df_2011_class.groupby('LSoa_name').sum()
-#df_2011_oa = df_2011_oa.div(df_2011_oa.sum(axis=1), axis=0)
-df_2011_oa = df_2011_oa.div(df_2011_class.groupby('LSoa_name').count(), axis=0)
+# # one hot encode classes 2011
+# df_2011_class = pd.get_dummies(df_2011_[['clusters_2011_cleanup']])
+# df_2011_class['LSoa_name'] = df_2011_[['LSoa_name']]
+# df_2011_oa = df_2011_class.groupby('LSoa_name').sum()
+# #df_2011_oa = df_2011_oa.div(df_2011_oa.sum(axis=1), axis=0)
+# df_2011_oa = df_2011_oa.div(df_2011_class.groupby('LSoa_name').count(), axis=0)
 
-# one hot encode classes 2018
-df_2018_class = pd.get_dummies(df_2018_[['clusters_2018_cleanup']])
-df_2018_class['LSoa_name'] = df_2018_[['LSoa_name']]
-df_2018_oa = df_2018_class.groupby('LSoa_name').sum()
-#df_2018_oa = df_2018_oa.div(df_2018_oa.sum(axis=1), axis=0)
-df_2018_oa = df_2018_oa.div(df_2018_class.groupby('LSoa_name').count(), axis=0)
+# # one hot encode classes 2018
+# df_2018_class = pd.get_dummies(df_2018_[['clusters_2018_cleanup']])
+# df_2018_class['LSoa_name'] = df_2018_[['LSoa_name']]
+# df_2018_oa = df_2018_class.groupby('LSoa_name').sum()
+# #df_2018_oa = df_2018_oa.div(df_2018_oa.sum(axis=1), axis=0)
+# df_2018_oa = df_2018_oa.div(df_2018_class.groupby('LSoa_name').count(), axis=0)
 
-# one hot encode classes 2018
-df_2021_class = pd.get_dummies(df_2021_[['clusters_2021_cleanup']])
-df_2021_class['LSoa_name'] = df_2021_[['LSoa_name']]
-df_2021_oa = df_2021_class.groupby('LSoa_name').sum()
-#df_2021_oa = df_2021_oa.div(df_2021_oa.sum(axis=1), axis=0)
-df_2021_oa = df_2021_oa.div(df_2021_class.groupby('LSoa_name').count(), axis=0)
+# # one hot encode classes 2018
+# df_2021_class = pd.get_dummies(df_2021_[['clusters_2021_cleanup']])
+# df_2021_class['LSoa_name'] = df_2021_[['LSoa_name']]
+# df_2021_oa = df_2021_class.groupby('LSoa_name').sum()
+# #df_2021_oa = df_2021_oa.div(df_2021_oa.sum(axis=1), axis=0)
+# df_2021_oa = df_2021_oa.div(df_2021_class.groupby('LSoa_name').count(), axis=0)
 
-# will have to merge to oa's.
-df_2011_oa['LSoa_name_'] = df_2011_oa.index 
-df_2018_oa['LSoa_name_'] = df_2018_oa.index 
-df_2021_oa['LSoa_name_'] = df_2021_oa.index 
+# # will have to merge to oa's.
+# df_2011_oa['LSoa_name_'] = df_2011_oa.index 
+# df_2018_oa['LSoa_name_'] = df_2018_oa.index 
+# df_2021_oa['LSoa_name_'] = df_2021_oa.index 
 
-merge_all = df_2011_oa.merge(df_2021_oa, on='LSoa_name_')
+# merge_all = df_2011_oa.merge(df_2021_oa, on='LSoa_name_')
 
 ################################################ PERCENTAGES
 features = list(prop.index)
@@ -390,45 +390,45 @@ for feature in features:
 
 merge_all.to_csv('outputs/cluster_proportions_2011_2021_lsoa.csv')
 
-################################################# QUARTILES
-df_2021_oa_quart = df_2021_oa.copy()
-for column in list(df_2021_oa.columns[:-1]):
-    df_2021_oa_quart[column] = pd.cut(df_2021_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
+# ################################################# QUARTILES
+# df_2021_oa_quart = df_2021_oa.copy()
+# for column in list(df_2021_oa.columns[:-1]):
+#     df_2021_oa_quart[column] = pd.cut(df_2021_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
 
-df_2011_oa_quart = df_2011_oa.copy()
-for column in list(df_2011_oa.columns[:-1]):
-    df_2011_oa_quart[column] = pd.cut(df_2011_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
+# df_2011_oa_quart = df_2011_oa.copy()
+# for column in list(df_2011_oa.columns[:-1]):
+#     df_2011_oa_quart[column] = pd.cut(df_2011_oa[column], [0, 0.01,.25, .5, .75, 1.], labels=[0,1,2,3,4])
 
-merge_all = df_2011_oa_quart.merge(df_2021_oa_quart, on='LSoa_name_')
+# merge_all = df_2011_oa_quart.merge(df_2021_oa_quart, on='LSoa_name_')
 
-features = list(prop.index)
-for feature in features:
-    new_column = 'proportion_%s' % feature
-    t0_column = 'clusters_2011_cleanup_%s' % feature
-    t1_column = 'clusters_2021_cleanup_%s' % feature
-    merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
+# features = list(prop.index)
+# for feature in features:
+#     new_column = 'proportion_%s' % feature
+#     t0_column = 'clusters_2011_cleanup_%s' % feature
+#     t1_column = 'clusters_2021_cleanup_%s' % feature
+#     merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
 
-merge_all.to_csv('outputs/cluster_quartiles_2011_2021_lsoa.csv')
+# merge_all.to_csv('outputs/cluster_quartiles_2011_2021_lsoa.csv')
 
-################################################# DECILES
-df_2021_oa_dec = df_2021_oa.copy()
-for column in list(df_2021_oa.columns[:-1]):
-    df_2021_oa_dec[column] = pd.cut(df_2021_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
+# ################################################# DECILES
+# df_2021_oa_dec = df_2021_oa.copy()
+# for column in list(df_2021_oa.columns[:-1]):
+#     df_2021_oa_dec[column] = pd.cut(df_2021_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
 
-df_2011_oa_dec = df_2011_oa.copy()
-for column in list(df_2011_oa.columns[:-1]):
-    df_2011_oa_dec[column] = pd.cut(df_2011_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
+# df_2011_oa_dec = df_2011_oa.copy()
+# for column in list(df_2011_oa.columns[:-1]):
+#     df_2011_oa_dec[column] = pd.cut(df_2011_oa[column], [-1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], labels=[0,1,2,3,4,5,6,7,8,9,10])
 
-merge_all = df_2011_oa_dec.merge(df_2021_oa_dec, on='LSoa_name_')
+# merge_all = df_2011_oa_dec.merge(df_2021_oa_dec, on='LSoa_name_')
 
-features = list(prop.index)
-for feature in features:
-    new_column = 'proportion_%s' % feature
-    t0_column = 'clusters_2011_cleanup_%s' % feature
-    t1_column = 'clusters_2021_cleanup_%s' % feature
-    merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
+# features = list(prop.index)
+# for feature in features:
+#     new_column = 'proportion_%s' % feature
+#     t0_column = 'clusters_2011_cleanup_%s' % feature
+#     t1_column = 'clusters_2021_cleanup_%s' % feature
+#     merge_all[new_column] = merge_all[t1_column].astype(float) - merge_all[t0_column].astype(float)
 
-merge_all.to_csv('outputs/cluster_deciles_2011_2021_lsoa.csv')
+# merge_all.to_csv('outputs/cluster_deciles_2011_2021_lsoa.csv')
 
 
 ################################################ SPOT CHECKS

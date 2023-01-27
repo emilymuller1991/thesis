@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import interval
 
-df_2011 = pd.read_csv('chapter4clustering/outputs/2011_reduced_set_proportions.csv')
-df_2021 = pd.read_csv('chapter4clustering/outputs/2021_reduced_set_proportions.csv')
+df_2011 = pd.read_csv('chapter4clustering/outputs/2011_reduced_set_proportions_dropna.csv')
+df_2021 = pd.read_csv('chapter4clustering/outputs/2021_reduced_set_proportions_dropna.csv')
 
 # remove those with low spatial sampling 
 certainty = pd.read_csv('chapter3data/outputs/sampling_rate_lsoa_all_years_sql.csv')
@@ -45,6 +45,33 @@ err_df_2021 = pd.DataFrame(std_err)
 df_2011.reset_index(drop=True, inplace=True)
 df_2021.reset_index(drop=True, inplace=True)
 
+############################################################ CALCULATING WELCH's t-test significance
+from scipy import stats
+def get_sig(mu_1, mu_2, sd_1, sd_2, n_1, n_2):
+    sd_1_corrected = sd_1/np.sqrt(n_1)
+    sd_2_corrected = sd_2/np.sqrt(n_2)
+    t = (mu_1 - mu_2) / np.sqrt(sd_1_corrected**2 + sd_2_corrected**2)
+    df = ((sd_1**2/n_1) + (sd_2**2/n_2))**2/((sd_1**2/(n_1*(n_1-1))) + (sd_2**4/(n_2*(n_2-1))))
+    p = stats.t.sf(np.abs(t), df=df)
+    return t, p, df
+
+welch = {}
+col = [i.split('_')[-1] for i in list(err_df_2021.columns)]
+for feature in col:
+    t0_column = 'clusters_2011_cleanup_%s' % feature
+    t1_column = 'clusters_2021_cleanup_%s' % feature
+    mu_0 = df_2011[t0_column]
+    sd_0 = err_df_2011[t0_column]
+    n_0 = df_2011['count']
+    mu_1 = df_2021[t1_column]
+    sd_1 = err_df_2021[t1_column]
+    n_1 = df_2021['count']
+    df = pd.DataFrame({'mu_0': mu_0*100, 'mu_1': mu_1*100, 'sd_0': sd_0, 'sd_1': sd_1, 'n_0': n_0, 'n_1': n_1})
+    df['t,p,d'] = df.apply(lambda x: get_sig(x.mu_0, x.mu_1, x.sd_0, x.sd_1, x.n_0, x.n_1), axis=1)
+    welch[feature] = list(df['t,p,d'].apply(lambda x: x[1]))
+
+welch_df = pd.DataFrame(welch)
+############################################################CALCULATING OVERLAPPING INTERVALS
 import portion as P
 
 std_int_2011 = {}
@@ -80,7 +107,6 @@ for feature in int_2021.columns:
 sig_df = 1 - pd.DataFrame(sig)
 
 sig_df['lsoa'] = df_2011['LSOA11CD']
-
 sig_df.to_csv('chapter4clustering/outputs/significant_temporal_changes_reduced_set.csv')
 
 # Commercial                                                     96
@@ -101,3 +127,6 @@ change_df['lsoa'] = df_2011['LSOA11CD']
 
 change_df.to_csv('chapter4clustering/outputs/cluster_proportions_reduced_set.csv')
 
+masked = change_df[sig_df]
+masked['lsoa'] = df_2011['LSOA11CD']
+masked.to_csv('chapter4clustering/outputs/cluster_masked_reduced_set.csv')
