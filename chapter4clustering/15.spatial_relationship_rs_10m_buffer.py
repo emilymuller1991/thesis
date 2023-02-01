@@ -92,7 +92,7 @@ df_2021['clusters_2021_cleanup'] = df_2021['clusters_2021_edited'].apply(lambda 
 df_2011['clusters_2011_cleanup'] = df_2011['clusters_2011_edited'].apply(lambda x: cleanup(x))
 df_2018['clusters_2018_cleanup'] = df_2018['clusters'].apply(lambda x: cleanup(x))
 
-# clean dataframe, keep single img identifier for merge to oa
+# clean dataframe, keep single img identifier for merge to oae
 df_2011 = df_2011[['Unnamed: 0.1', 'clusters', 'clusters_2011_edited', 'clusters_2011_cleanup']]
 df_2011['idx'] = df_2011['Unnamed: 0.1'].apply(lambda x : int(x[:-2]))
 df_2018 = df_2018[['Unnamed: 0', 'clusters', 'clusters_2018_cleanup']]
@@ -104,38 +104,60 @@ df_2021['idx'] = df_2021['Unnamed: 0.1'].apply(lambda x : int(x[:-2]))
 df_2011 = df_2011.dropna()
 df_2021 = df_2021.dropna()
 # 2011 - 935,662 # 2021 - 885,610
-meta_2011 = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_single.csv')
-df_2011_keep = list(df_2011['idx'])
-meta_2011_keep = meta_2011[meta_2011['idx'].isin(df_2011_keep)]
-# 601,135 from 735,764
-meta_2011_keep.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_single_dropna.csv', index=False)
+meta_2011 = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_double.csv')
+df_2011_keep = list(df_2011['Unnamed: 0.1'])
+meta_2011_keep = meta_2011[meta_2011['idx_y'].isin(df_2011_keep)]
+meta_2011_keep.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_double_dropna.csv', index=False)
+##################################################### SPLIT ANGLES B & D 
+meta_2011_keep['keep'] = meta_2011_keep.apply(lambda x: 1 if x.idx_y[-1] == 'd' else 0, axis=1)
+meta_2011_keep_d = meta_2011_keep[meta_2011_keep['keep'] == 1]
+# 466,693
+meta_2011_keep_b = meta_2011_keep[meta_2011_keep['keep'] == 0]
+# 468,969
+meta_2011_keep_b.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_double_dropna_b.csv', index=False)
+meta_2011_keep_d.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2011/census_2011_image_meta_double_dropna_d.csv', index=False)
 
-meta_2021 = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_single.csv')
-df_2021_keep = list(df_2021['idx'])
-meta_2021_keep = meta_2021[meta_2021['idx'].isin(df_2021_keep)]
-# 591,965 from 761,647
+meta_2021 = pd.read_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_double.csv')
+df_2021_keep = list(df_2021['Unnamed: 0.1'])
+meta_2021_keep = meta_2021[meta_2021['idx_y'].isin(df_2021_keep)]
+
 meta_2021_keep = meta_2021_keep.drop(['idx_y.1'], axis=1)
-meta_2021_keep.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_single_dropna.csv', index=False)
+meta_2021_keep.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_double_dropna.csv', index=False)
+##################################################### SPLIT ANGLES B & D 
+meta_2021_keep['keep'] = meta_2021_keep.apply(lambda x: 1 if x.idx_y[-1] == 'd' else 0, axis=1)
+meta_2021_keep_d = meta_2021_keep[meta_2021_keep['keep'] == 1]
+# 438,834
+meta_2021_keep_b = meta_2021_keep[meta_2021_keep['keep'] == 0]
+# 446,776
+meta_2021_keep_b.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_double_dropna_b.csv', index=False)
+meta_2021_keep_d.to_csv('/home/emily/phd/0_get_images/outputs/psql/census_2021/census_2021_image_meta_double_dropna_d.csv', index=False)
 
 ################################################ IMAGES MATCHED BY BUFFER
-buffered = pd.read_csv('chapter3data/outputs/2011_buffered_merge_to_2021_dropna.csv')
+buffered_b = pd.read_csv('chapter3data/outputs/2011_buffered_merge_to_2021_dropna_b.csv') # 285,601
+buffered_d = pd.read_csv('chapter3data/outputs/2011_buffered_merge_to_2021_dropna_d.csv') # 278,921
+buffered_b['idx_2011_b'] = buffered_b.apply(lambda x: str(x.idx_2011) + '_b', axis=1)
+buffered_b['idx_2021_b'] = buffered_b.apply(lambda x: str(x.idx_2021) + '_b', axis=1)
+
+buffered_d['idx_2011_d'] = buffered_d.apply(lambda x: str(x.idx_2011) + '_d', axis=1)
+buffered_d['idx_2021_d'] = buffered_d.apply(lambda x: str(x.idx_2021) + '_d', axis=1) # 592023
+
+# # remove everything from df2011 and df2021 that is not in this list
+# df_2011_keep = list(buffered['idx_2011'])
+# df_2011_ = df_2011[df_2011['idx'].isin(df_2011_keep)]
+# # original shape is 1,471,463 # new shape is 932,657 # new one withot na is 599,701
+
+# df_2021_keep = list(buffered['idx_2021'])
+# df_2021_ = df_2021[df_2021['idx'].isin(df_2021_keep)]
+# # original shape is 1,522,701 # new shape is 1,034,439 # new one without na is 567,056
 
 # remove everything from df2011 and df2021 that is not in this list
-df_2011_keep = list(buffered['idx_2011'])
-df_2011_ = df_2011[df_2011['idx'].isin(df_2011_keep)]
-# original shape is 1,471,463 # new shape is 932,657 # new one withot na is 599,701
+df_2011_keep = list(buffered_d['idx_2011_d']) + list(buffered_b['idx_2011_b'])
+df_2011_ = df_2011[df_2011['Unnamed: 0.1'].isin(df_2011_keep)]
+# original shape is 1,471,463 # new shape is 932,657 # new one withot na is 599,701 # new shape matched to angle is 509,182
 
-df_2021_keep = list(buffered['idx_2021'])
-df_2021_ = df_2021[df_2021['idx'].isin(df_2021_keep)]
-# original shape is 1,522,701 # new shape is 1,034,439 # new one without na is 567,056
-
-################################################ SAVE 'E01004392' (lat,lon)
-example_2021 = df_2021_[df_2021_['LSOA11CD'] == 'E01004392'].merge(meta_2021_keep, left_on='idx', right_on='idx')
-
-example_2011 = df_2011_[df_2011_['LSOA11CD'] == 'E01004392'].merge(meta_2011_keep, left_on='idx', right_on='idx')
-
-example_2021.to_csv('chapter4clustering/outputs/spots/point_2_point_2021_walthamstow.csv')
-example_2011.to_csv('chapter4clustering/outputs/spots/point_2_point_2011_walthamstow.csv')
+df_2021_keep = list(buffered_d['idx_2021_d']) + list(buffered_b['idx_2021_b'])
+df_2021_ = df_2021[df_2021['Unnamed: 0.1'].isin(df_2021_keep)]
+# original shape is 1,522,701 # new shape is 1,034,439 # new one without na is 567,056 # new shape matched to angle is 501,685
 
 ################################################ PERCENTAGES MERGED TO LSOA
 # get merged oa counts
@@ -155,6 +177,51 @@ oa = pd.read_csv('/home/emily/phd/002_validation/source/oa/OA_2011_London_gen_MH
 df_2011_ = df_2011_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
 # df_2018_ = df_2018_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
 df_2021_ = df_2021_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+
+################################################ SAVE 'E01004392' (lat,lon)
+example_2021 = df_2021_[df_2021_['LSOA11CD'] == 'E01004392'].merge(meta_2021_keep, left_on='Unnamed: 0.1', right_on='idx_y')
+example_2011 = df_2011_[df_2011_['LSOA11CD'] == 'E01004392'].merge(meta_2011_keep, left_on='Unnamed: 0.1', right_on='idx_y')
+
+example_2021_b = example_2021[example_2021['keep'] == 0]
+example_2021_d = example_2021[example_2021['keep'] == 1]
+example_2011_b = example_2011[example_2011['keep'] == 0]
+example_2011_d = example_2011[example_2011['keep'] == 1]
+
+example_2021_b.to_csv('chapter4clustering/outputs/spots/point_2_point_2021_walthamstow_b.csv')
+example_2021_d.to_csv('chapter4clustering/outputs/spots/point_2_point_2021_walthamstow_d.csv')
+example_2011_b.to_csv('chapter4clustering/outputs/spots/point_2_point_2011_walthamstow_b.csv')
+example_2011_d.to_csv('chapter4clustering/outputs/spots/point_2_point_2011_walthamstow_d.csv')
+
+################################################## GET UNIQUE CHANGES
+joins_d = example_2021_d[['Unnamed: 0.1', 'clusters', 'clusters_2021_cleanup']].merge(buffered_d, left_on='Unnamed: 0.1', right_on='idx_2021_d')
+joins_d = joins_d.merge(example_2011_d[['Unnamed: 0.1', 'clusters', 'clusters_2011_cleanup']], left_on='idx_2011_d', right_on='Unnamed: 0.1')
+joins_b = example_2021_b[['Unnamed: 0.1', 'clusters', 'clusters_2021_cleanup']].merge(buffered_b, left_on='Unnamed: 0.1', right_on='idx_2021_b')
+joins_b = joins_b.merge(example_2011_b[['Unnamed: 0.1', 'clusters', 'clusters_2011_cleanup']], left_on='idx_2011_b', right_on='Unnamed: 0.1')
+
+# joins = pd.concat([joins_d[list(joins_d.columns[:-2])],  joins_b[list(joins_b.columns[:-2])]])
+joins = pd.concat([joins_b, joins_d])
+
+joins['change'] = joins.apply(lambda x: 1 if x.clusters_2021_cleanup != x.clusters_2011_cleanup else 0, axis=1)
+change = joins[joins['change'] == 1]
+
+changes = change[['clusters_2011_cleanup','clusters_2021_cleanup']]
+changes['one'] = np.arange(24)
+pivot = pd.pivot_table(changes, values='one', index='clusters_2011_cleanup', columns='clusters_2021_cleanup',
+               aggfunc='count').reset_index()
+
+pivot['Green space'] = np.zeros(5)
+pivot = pivot.fillna(0)
+
+import seaborn as sns
+plt.clf()
+f = plt.figure(figsize=(10, 10))
+
+sns.heatmap(pivot[pivot.columns[1:]], annot=True)
+plt.yticks(labels=features)
+plt.xlabel('2021')
+plt.ylabel('2011')
+plt.show()
+##########################################################################
 
 df_2011_ = df_2011_.dropna()
 # df_2018_ = df_2018_.dropna()
