@@ -216,11 +216,11 @@ import seaborn as sns
 plt.clf()
 f = plt.figure(figsize=(10, 10))
 
-sns.heatmap(pivot[pivot.columns[1:]], annot=True)
-plt.yticks(labels=features)
+sns.heatmap(pivot[pivot.columns[1:]], annot=True, cbar=False)
+plt.yticks(ticks=np.arange(0.5,5,1),labels=list( pivot[pivot.columns[0]]))
 plt.xlabel('2021')
 plt.ylabel('2011')
-plt.show()
+plt.savefig('chapter4clustering/outputs/spots/walthamstow_heatmap_change.png',bbox_inches="tight", dpi=150)
 ##########################################################################
 
 df_2011_ = df_2011_.dropna()
@@ -308,3 +308,8 @@ plt.savefig('chapter4clustering/outputs/corr_matrix_lsoa_reduced_group.png',bbox
 
 df.to_csv
 ################################################ SPOT CHECKS
+
+# '179419_d.png', '635955_b.png', '701919_b.png', '680175_d.png', '675713_b.png', '777749_b.png', '758842_b.png', '697786_b.png', '701815_d.png', '721090_d.png', '925099_d.png', '98442_b.png', '767695_d.png', '755300_b.png', '98304_d.png'
+# ['132528_b.png', '329989_d.png', '37983_b.png', '462806_d.png', '67223_d.png', '109030_d.png', '98304_d.png']
+
+#['85284_d.png', '65849_b.png', '90766_b.png', '695671_d.png', '96538_b.png', '76201_b.png', '544670_d.png', '70795_d.png', '537425_b.png', '532528_d.png', '420764_d.png', '465851_b.png', '7613_d.png', '661795_d.png', '678241_b.png', '733767_b.png', '668620_d.png', '583219_d.png', '689885_b.png', '703580_b.png', '10979_b.png', '461603_b.png', '178682_b.png', '558442_d.png', '580457_b.png', '63106_d.png', '99854_b.png', '552098_b.png', '669661_b.png', '645839_d.png', '85284_b.png', '537085_d.png', '78904_d.png', '627123_b.png', '549024_b.png', '567453_d.png', '537086_b.png', '620528_b.png', '639534_b.png', '57452_d.png', '94025_d.png', '71124_d.png', '687174_b.png', '696941_b.png', '61752_d.png', '56455_d.png', '655458_b.png', '623383_d.png', '63603_d.png', '558865_b.png', '70006_b.png', '661535_b.png', '729133_d.png', '623955_d.png', '617740_d.png', '98304_d.png']

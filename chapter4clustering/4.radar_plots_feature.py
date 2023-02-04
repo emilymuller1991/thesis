@@ -28,20 +28,15 @@ features = ['building_seg',
  'person',
  'truck']
 colors = ['grey', 'green', 'red', 'black', 'white', 'grey', 'black', 'grey', 'black', 'orange', 'green', 'red', 'yellow', 'orange', 'red', 'black', 'red', 'blue', 'black', 'yellow', 'black']
-# colors = ['grey', 'green', 'red']
-# colors = {
-#     'building_seg': 'grey',
-#     'vegetation_seg': 'green',
-#     'car': 'red'
-# }
 a = everything[features]
-#a = a[a['clusters_20'].isin([0,1,2,4,6,7,8,9,10,11,12,13,14,15,16,18,19])]
 x = a[features].values
-min_max_scaler = preprocessing.MinMaxScaler()
+min_max_scaler = preprocessing.MinMaxScaler(feature_range=(0, 1))
 x_scaled = min_max_scaler.fit_transform(x)
 df = pd.DataFrame(x_scaled)
 df.columns = features
 df['clusters'] = everything['clusters']
+grouped = df.groupby('clusters').mean()
+grouped.to_csv('/media/emily/south/phd/chapter4clustering/outputs/df_everything_radar.csv')
 
 fi = pd.read_csv('/home/emily/phd/2_interpretability/features/outputs/RF_shap_class_fi.csv')
 fi = fi.drop(columns='0')
