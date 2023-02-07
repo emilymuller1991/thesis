@@ -55,7 +55,12 @@ for i in range(n_clusters):
         dist = k_mean_distance(centroid_1, centroid_2)
         distances[i][j] = dist
 
-
+centroids = {}
+for i in range(n_clusters):
+    centroid_1 = get_cluster_center(i, df)
+    centroids[i] = centroid_1
+df_centroids = pd.DataFrame(centroids).T
+df_centroids.to_csv('/media/emily/south/phd/chapter4clustering/outputs/cluster_centroids.csv')
 # import matplotlib.pyplot as plt
 # import numpy as np
 
@@ -81,62 +86,62 @@ for i in range(n_clusters):
 
 
 ################ SANKEY
-import pandas as pd
-from pySankey import sankey
-import matplotlib.pyplot as plt 
+# import pandas as pd
+# from pySankey import sankey
+# import matplotlib.pyplot as plt 
 
-c = pd.read_csv('/home/emily/phd/2_interpretability/sankey/rmac_clusters.csv')
+# c = pd.read_csv('/home/emily/phd/2_interpretability/sankey/rmac_clusters.csv')
 
-colors = {
-    0: "#d62728",
-    1: "#1f77b4", # high-density
-    2: "#8c564b",
-    3: "#8c564b",
-    4: "#8c564b", # green = veg
-    5: "#8c564b", # commercial
-    6: "#1f77b4", 
-    7: "#1f77b4", # terraced 
-    8: "#9467bd", # disregarded
-    9: "#9467bd", 
-    10: "#d62728", 
-    11: "#1f77b4", # low-density
-    12: "#8c564b", 
-    13: "#1f77b4", 
-    14: "#9467bd", 
-    15: "#1f77b4", 
-    16: "#ff7f0e", 
-    17: "#2ca02c", 
-    18: "#ff7f0e", 
-    19: "#2ca02c"
-}
+# colors = {
+#     0: "#d62728",
+#     1: "#1f77b4", # high-density
+#     2: "#8c564b",
+#     3: "#8c564b",
+#     4: "#8c564b", # green = veg
+#     5: "#8c564b", # commercial
+#     6: "#1f77b4", 
+#     7: "#1f77b4", # terraced 
+#     8: "#9467bd", # disregarded
+#     9: "#9467bd", 
+#     10: "#d62728", 
+#     11: "#1f77b4", # low-density
+#     12: "#8c564b", 
+#     13: "#1f77b4", 
+#     14: "#9467bd", 
+#     15: "#1f77b4", 
+#     16: "#ff7f0e", 
+#     17: "#2ca02c", 
+#     18: "#ff7f0e", 
+#     19: "#2ca02c"
+# }
 
-colors = {
-    0: "#1f77b4",
-    1: "#2ca02c", 
-    2: "#2ca02c",
-    3: "#8c564b",
-    4: "#ff7f0e", # disregarded
-    5: "#8c564b", # 
-    6: "#ff7f0e", 
-    7: "#8c564b", # 
-    8: "#9467bd", # 
-    9: "#9467bd", 
-    10: "#ff7f0e", # commercial
-    11: "#2ca02c", #
-    12: "#8c564b", 
-    13: "#d62728", 
-    14: "#8c564b", 
-    15: "#d62728", 
-    16: "#8c564b", 
-    17: "#ff7f0e", 
-    18: "#8c564b", 
-    19: "#8c564b"
-}
+# colors = {
+#     0: "#1f77b4",
+#     1: "#2ca02c", 
+#     2: "#2ca02c",
+#     3: "#8c564b",
+#     4: "#ff7f0e", # disregarded
+#     5: "#8c564b", # 
+#     6: "#ff7f0e", 
+#     7: "#8c564b", # 
+#     8: "#9467bd", # 
+#     9: "#9467bd", 
+#     10: "#ff7f0e", # commercial
+#     11: "#2ca02c", #
+#     12: "#8c564b", 
+#     13: "#d62728", 
+#     14: "#8c564b", 
+#     15: "#d62728", 
+#     16: "#8c564b", 
+#     17: "#ff7f0e", 
+#     18: "#8c564b", 
+#     19: "#8c564b"
+# }
 
-a = [11,1,12,4,3,2,5,14,8,9,10,0,13,7,19,17,6,18,16,15]
-b = [a[19 - i] for i in range(20)]
-sankey.sankey(c['cluster_20'], c['cluster_10'], aspect=20, leftLabels = b, fontsize=12)
-plt.savefig("/home/emily/phd/2_interpretability/sankey/outputs/rmac_20_10.svg")
+# a = [11,1,12,4,3,2,5,14,8,9,10,0,13,7,19,17,6,18,16,15]
+# b = [a[19 - i] for i in range(20)]
+# sankey.sankey(c['cluster_20'], c['cluster_10'], aspect=20, leftLabels = b, fontsize=12)
+# plt.savefig("/home/emily/phd/2_interpretability/sankey/outputs/rmac_20_10.svg")
 
 import scipy
 import pylab

@@ -8,8 +8,12 @@ df_ <- read.csv("/media/emily/south/phd/chapter4clustering/outputs/df_everything
 clusters <- df_[,1:2]$clusters
 
 colors <- c("grey", "green", "red", "black", "white", "grey", "black", "grey", "black", "orange", "green", "red", "yellow", "orange", "red", "black", "red", "blue", "black", "yellow", "black")
-colors <- c("#999999","#009E73", "#D55E00", "#000000", "white",  "#D55E00", "#999999", "#000000", "#E69F00", "#009E73", "#D55E00", "#F0E442","#E69F00","#D55E00","#000000","#D55E00",
-            "#F0E442", "#000000")
+colors <- c("white","#999999","green", "red", "#000000", "white","#999999", "#000000","#999999","#000000","#D55E00","green","red","#F0E442","#D55E00","red","#56B4E9", # bicyle
+            "red","red","red","#F0E442","red")
+            
+            
+            
+  
 
 for(i in seq_along(colnames(df_))) {
   col <- colnames(df_)[i]
@@ -21,7 +25,7 @@ for(i in seq_along(colnames(df_))) {
     # Make custom panel grid
     geom_hline(
       aes(yintercept = y), 
-      data.frame(y = c(0, round(median(feature),3),  round(max(feature),2))),
+      data.frame(y = c(0, round(median(feature),3),  round(max(feature),4)+0.0001)),
       color = "lightgrey",
       size = 1
     ) + 
@@ -34,7 +38,7 @@ for(i in seq_along(colnames(df_))) {
         x = clusters,
         y = 0,
         xend = clusters,
-        yend = round(max(feature),2)
+        yend = round(max(feature),4)+0.0001
       ),
       linetype = "dashed",
       color = "lightgrey"
@@ -45,19 +49,19 @@ for(i in seq_along(colnames(df_))) {
         y = feature,
         fill= rep('i',20)
       ),
-      color = 'black',
+      color = 'darkgrey',
   #    size=1.5,
       show.legend = FALSE,
-      alpha = 0.8
+      alpha = 0.6
     ) +
     scale_fill_manual(values=c(rep(colors[i],20))) +
     # Make it circular!
     coord_polar() +
     # Scale y axis so bars don't start in the center
     scale_y_continuous(
-      limits = c(-round(max(feature),2)/6, round(max(feature),2)),
+      limits = c(-round(max(feature),2)/6, round(max(feature),4)+0.0001),
       expand = c(0, 0),
-      breaks = c(0, round(median(feature),3),  round(max(feature),2))
+      breaks = c(0, round(median(feature),3),  round(max(feature),4)+0.0001)
     )+ 
     # Annotate custom scale inside plot
     annotate(
@@ -68,14 +72,14 @@ for(i in seq_along(colnames(df_))) {
       color = "black",
       size=2.5
     ) +
-    annotate(
-      x = 19.6, 
-      y = round(max(feature),2), 
-      label = round(max(feature),2), 
-      geom = "text", 
-      color = "black",
-      size=2.5
-    ) +
+    # annotate(
+    #   x = 19.6, 
+    #   y = round(max(feature),2), 
+    #   label = round(max(feature),2), 
+    #   geom = "text", 
+    #   color = "black",
+    #   size=2.5
+    # ) +
     theme(
       # Remove axis ticks and text
       axis.title = element_blank(),
@@ -133,5 +137,5 @@ for(i in seq_along(colnames(df_))) {
 #  grid.line.width = 1.5,
 #  gridline.max.linetype = "solid",
 #  group.point.size = 4,
-#  group.colours = c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+#  group.colours = c("#999999", "#E69F00", "#56B4E9", "green", "#F0E442", "#0072B2", "red", "#CC79A7")
 #)##

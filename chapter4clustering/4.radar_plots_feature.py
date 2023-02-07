@@ -36,7 +36,14 @@ df = pd.DataFrame(x_scaled)
 df.columns = features
 df['clusters'] = everything['clusters']
 grouped = df.groupby('clusters').mean()
-grouped.to_csv('/media/emily/south/phd/chapter4clustering/outputs/df_everything_radar.csv')
+#grouped.to_csv('/media/emily/south/phd/chapter4clustering/outputs/df_everything_radar.csv')
+
+
+# get masked dataframe if greater than median
+mask = grouped.where(grouped > grouped.median(axis=0) ,0)
+mask[mask != 0] = 1
+mask = mask.astype('int')
+print(mask.to_latex(index=False))
 
 fi = pd.read_csv('/home/emily/phd/2_interpretability/features/outputs/RF_shap_class_fi.csv')
 fi = fi.drop(columns='0')
