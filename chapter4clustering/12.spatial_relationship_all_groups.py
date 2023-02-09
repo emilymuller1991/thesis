@@ -136,8 +136,7 @@ df_2018['idx'] = df_2018['Unnamed: 0'].apply(lambda x : int(x[:-2]))
 df_2021 = df_2021[['Unnamed: 0.1', 'clusters', 'clusters_2021_edited', 'clusters_2021_cleanup']]
 df_2021['idx'] = df_2021['Unnamed: 0.1'].apply(lambda x : int(x[:-2]))
 
-
-################################################ PERCENTAGES MERGED TO LSOA
+################################################ PERCENTAGES MERGED TO OA
 # get merged oa counts
 df_2011_oa = pd.read_csv('chapter3data/outputs/2011_panoids_merged_to_oa.csv')
 df_2018_oa = pd.read_csv('chapter3data/outputs/2018_panoids_merged_to_oa.csv')
@@ -151,10 +150,10 @@ df_2021_ = df_2021.merge(df_2021_oa[['oa_name', 'idx']], left_on='idx', right_on
 df_2021_ = df_2021_.drop_duplicates()
 
 # merge to lsoa
-oa = pd.read_csv('/home/emily/phd/002_validation/source/oa/OA_2011_London_gen_MHW_4326_all_fields.csv')
-df_2011_ = df_2011_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
-df_2018_ = df_2018_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
-df_2021_ = df_2021_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+# oa = pd.read_csv('/home/emily/phd/002_validation/source/oa/OA_2011_London_gen_MHW_4326_all_fields.csv')
+# df_2011_ = df_2011_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+# df_2018_ = df_2018_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+# df_2021_ = df_2021_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
 
 # df_2011_ = df_2011_.dropna()
 # df_2018_ = df_2018_.dropna()
@@ -162,31 +161,83 @@ df_2021_ = df_2021_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_o
 
 # one hot encode classes 2011
 df_2011_class = pd.get_dummies(df_2011_[['clusters_2011_cleanup']])
-df_2011_class['LSOA11CD'] = df_2011_[['LSOA11CD']]
-df_2011_oa = df_2011_class.groupby('LSOA11CD').sum()
+df_2011_class['oa_name'] = df_2011_[['oa_name']]
+df_2011_oa = df_2011_class.groupby('oa_name').sum()
 #df_2011_oa = df_2011_oa.div(df_2011_oa.sum(axis=1), axis=0)
-df_2011_oa = df_2011_oa.div(df_2011_class.groupby('LSOA11CD').count(), axis=0)
+df_2011_oa = df_2011_oa.div(df_2011_class.groupby('oa_name').count(), axis=0)
 
 # one hot encode classes 2018
 df_2018_class = pd.get_dummies(df_2018_[['clusters_2018_cleanup']])
-df_2018_class['LSOA11CD'] = df_2018_[['LSOA11CD']]
-df_2018_oa = df_2018_class.groupby('LSOA11CD').sum()
+df_2018_class['oa_name'] = df_2018_[['oa_name']]
+df_2018_oa = df_2018_class.groupby('oa_name').sum()
 #df_2018_oa = df_2018_oa.div(df_2018_oa.sum(axis=1), axis=0)
-df_2018_oa = df_2018_oa.div(df_2018_class.groupby('LSOA11CD').count(), axis=0)
+df_2018_oa = df_2018_oa.div(df_2018_class.groupby('oa_name').count(), axis=0)
 
 # one hot encode classes 2018
 df_2021_class = pd.get_dummies(df_2021_[['clusters_2021_cleanup']])
-df_2021_class['LSOA11CD'] = df_2021_[['LSOA11CD']]
-df_2021_oa = df_2021_class.groupby('LSOA11CD').sum()
+df_2021_class['oa_name'] = df_2021_[['oa_name']]
+df_2021_oa = df_2021_class.groupby('oa_name').sum()
 #df_2021_oa = df_2021_oa.div(df_2021_oa.sum(axis=1), axis=0)
-df_2021_oa = df_2021_oa.div(df_2021_class.groupby('LSOA11CD').count(), axis=0)
+df_2021_oa = df_2021_oa.div(df_2021_class.groupby('oa_name').count(), axis=0)
 
 # will have to merge to oa's.
-df_2011_oa['lsoa'] = df_2011_oa.index 
-df_2018_oa['lsoa'] = df_2018_oa.index 
-df_2021_oa['lsoa'] = df_2021_oa.index 
+df_2011_oa['oa_name'] = df_2011_oa.index 
+df_2018_oa['oa_name'] = df_2018_oa.index 
+df_2021_oa['oa_name'] = df_2021_oa.index 
 
-merge_all = df_2011_oa.merge(df_2021_oa, on='lsoa')
+merge_all = df_2011_oa.merge(df_2021_oa, on='oa_name')
+
+df_2018_oa.to_csv('/media/emily/south/phd/chapter4clustering/outputs/2018_all_groups_val.csv')
+# ################################################ PERCENTAGES MERGED TO LSOA
+# # get merged oa counts
+# df_2011_oa = pd.read_csv('chapter3data/outputs/2011_panoids_merged_to_oa.csv')
+# df_2018_oa = pd.read_csv('chapter3data/outputs/2018_panoids_merged_to_oa.csv')
+# df_2021_oa = pd.read_csv('chapter3data/outputs/2021_panoids_merged_to_oa.csv')
+
+# df_2011_ = df_2011.merge(df_2011_oa[['oa_name', 'idx']], left_on='idx', right_on='idx' )
+# df_2011_ = df_2011_.drop_duplicates()
+# df_2018_ = df_2018.merge(df_2018_oa[['oa_name', 'idx']], left_on='idx', right_on='idx' )
+# df_2018_ = df_2018_.drop_duplicates()
+# df_2021_ = df_2021.merge(df_2021_oa[['oa_name', 'idx']], left_on='idx', right_on='idx' )
+# df_2021_ = df_2021_.drop_duplicates()
+
+# # merge to lsoa
+# oa = pd.read_csv('/home/emily/phd/002_validation/source/oa/OA_2011_London_gen_MHW_4326_all_fields.csv')
+# df_2011_ = df_2011_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+# df_2018_ = df_2018_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+# df_2021_ = df_2021_.merge(oa[['OA11CD', 'LSOA11CD']], left_on='oa_name', right_on='OA11CD' )
+
+# # df_2011_ = df_2011_.dropna()
+# # df_2018_ = df_2018_.dropna()
+# # df_2021_ = df_2021_.dropna()
+
+# # one hot encode classes 2011
+# df_2011_class = pd.get_dummies(df_2011_[['clusters_2011_cleanup']])
+# df_2011_class['LSOA11CD'] = df_2011_[['LSOA11CD']]
+# df_2011_oa = df_2011_class.groupby('LSOA11CD').sum()
+# #df_2011_oa = df_2011_oa.div(df_2011_oa.sum(axis=1), axis=0)
+# df_2011_oa = df_2011_oa.div(df_2011_class.groupby('LSOA11CD').count(), axis=0)
+
+# # one hot encode classes 2018
+# df_2018_class = pd.get_dummies(df_2018_[['clusters_2018_cleanup']])
+# df_2018_class['LSOA11CD'] = df_2018_[['LSOA11CD']]
+# df_2018_oa = df_2018_class.groupby('LSOA11CD').sum()
+# #df_2018_oa = df_2018_oa.div(df_2018_oa.sum(axis=1), axis=0)
+# df_2018_oa = df_2018_oa.div(df_2018_class.groupby('LSOA11CD').count(), axis=0)
+
+# # one hot encode classes 2018
+# df_2021_class = pd.get_dummies(df_2021_[['clusters_2021_cleanup']])
+# df_2021_class['LSOA11CD'] = df_2021_[['LSOA11CD']]
+# df_2021_oa = df_2021_class.groupby('LSOA11CD').sum()
+# #df_2021_oa = df_2021_oa.div(df_2021_oa.sum(axis=1), axis=0)
+# df_2021_oa = df_2021_oa.div(df_2021_class.groupby('LSOA11CD').count(), axis=0)
+
+# # will have to merge to oa's.
+# df_2011_oa['lsoa'] = df_2011_oa.index 
+# df_2018_oa['lsoa'] = df_2018_oa.index 
+# df_2021_oa['lsoa'] = df_2021_oa.index 
+
+# merge_all = df_2011_oa.merge(df_2021_oa, on='lsoa')
 
 ################################################ PERCENTAGES
 prop = df_2011['clusters_2011_cleanup'].value_counts().sort_index().index

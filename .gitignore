@@ -1,6 +1,7 @@
 chapter3data/outputs/ignore/*
 ggplot_theme_Publication/*
-chapter4clustering/outputs/R/*
+chapter4clustering/outputs/R/
+chapter4clustering/outputs/qgis/*.qgz
 .RData
 .Rhistory
 x_corrupts.txt

@@ -6,6 +6,7 @@ from pySankey import sankey
 
 # read in panoids merged to validation files (verisk and green)
 verisk = pd.read_csv('/home/emily/phd/002_validation/buildings/1to1_panoids_building_buiid.csv')
+verisk2 = pd.read_csv('/home/emily/phd/002_validation/source/ukbuildings_4578848/ukbuildings_edited.csv')
 os = pd.read_csv('/home/emily/phd/002_validation/green/osgreen_image_angle.csv')
 clusters = pd.read_csv('/media/emily/south/rmac_feature_vectors/2018_rmac_feature_vector_clusters_20.csv')
 

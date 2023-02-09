@@ -27,3 +27,8 @@ tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter4clustering/outputs/R
 plot(dend,horiz=TRUE, axes=TRUE, xlab='Distance')
 # closing the graphics device saves the file we opened with tikzDevice::tikz
 dev.off()
+path <- "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/dendogram.tex"
+lines <- readLines(con=path)
+lines <- lines[-which(grepl("\\path\\[clip\\]*", lines,perl=F))]
+lines <- lines[-which(grepl("\\path\\[use as bounding box*", lines,perl=F))]
+writeLines(lines,con=path)
