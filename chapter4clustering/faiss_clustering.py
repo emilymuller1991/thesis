@@ -8,7 +8,6 @@ wandb_name = sys.argv[1]
 wandb.login(key='188ce11fc669c7ea709e957bece5360053daabe8')
 wandb.init(id = id, project='faiss_clustering', entity='emilymuller1991')
 
-
 n_clusters = 20
 # prefix for hpc
 # prefix = '/rds/general/user/emuller/home'
@@ -67,7 +66,7 @@ def run_kmeans(x, nmb_clusters, verbose=False):
         print('k-means loss evolution: {0}'.format(losses))
         wandb.log(
             {
-                "loss_train": losses[-1]
+                "loss": losses[-1]
             }
         )
 
