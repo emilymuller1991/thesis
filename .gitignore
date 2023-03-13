@@ -2,6 +2,10 @@ chapter3data/outputs/ignore/*
 ggplot_theme_Publication/*
 chapter4clustering/outputs/R/
 chapter4clustering/outputs/qgis/*.qgz
+chapter5perceptions/outputs/predictions/*
+chapter5perceptions/8.inference/*
+chapter4clustering/outputs/census_2011_and_census_2021_zoom_matched.csv
+chapter4clustering/outputs/image_pairs_significant_angle_b.csv
 .RData
 .Rhistory
 x_corrupts.txt

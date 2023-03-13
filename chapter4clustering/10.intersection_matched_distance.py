@@ -60,8 +60,8 @@ keep2 = c.dropna()
 nmi_drop_disregarded = nmi(keep2['clusters_2018_drop_disregarded'], keep2['clusters_2021_drop_disregarded'])
 # 0.6383992790875631
 
-sankey.sankey(keep2['clusters_2018_drop_disregarded'], keep2['clusters_2021_drop_disregarded'], aspect=20, 
-    fontsize=12)
+#sankey.sankey(keep2['clusters_2018_drop_disregarded'], keep2['clusters_2021_drop_disregarded'], aspect=20, 
+    #fontsize=12)
 
 ######## aggregate and drop clusters not interested in
 def group_similar(x):
@@ -203,7 +203,7 @@ keep3 = c.dropna()
 sankey = keep3[['clusters_2018_keep_interesting','clusters_2021_keep_interesting']]
 sankey['tuple'] = sankey.apply(lambda x: (x.clusters_2018_keep_interesting, x.clusters_2021_keep_interesting), axis=1)
 sankey_grouped = sankey.groupby('tuple').count()
-sankey_grouped['source'] = [sankey_grouped.index[i][0] + '_2011' for i in range(sankey_grouped.shape[0])]
+sankey_grouped['source'] = [sankey_grouped.index[i][0] + '_2018' for i in range(sankey_grouped.shape[0])]
 sankey_grouped['target'] = [sankey_grouped.index[i][1] + '_2021' for i in range(sankey_grouped.shape[0])]
 sankey_grouped = sankey_grouped[['clusters_2018_keep_interesting', 'source', 'target']]
 sankey_grouped.to_csv('chapter4clustering/outputs/intersection_sankey.csv')

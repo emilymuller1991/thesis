@@ -33,20 +33,35 @@ my_color <- 'd3.scaleOrdinal() .domain(["c","hd","lg","og","t","e","gs", "ld"]) 
 p <- sankeyNetwork(Links = links, Nodes = nodes, Source = "IDsource", Target = "IDtarget", 
                    Value = "clusters_2018_keep_interesting", NodeID = "name", 
                    colourScale=my_color, LinkGroup="group", NodeGroup="group", fontSize=14)
-p
-saveNetwork(p, "sn.html")
+p <- onRender(
+  p,
+  '
+  function(el,x){
+  // select all our node text
+  d3.select(el)
+  .selectAll(".node text")
+  .filter(function(d) { return d.name.endsWith("2018"); })
+  .attr("x", x.options.nodeWidth - 22)
+  .attr("text-anchor", "end");
+  }
+  '
+)
+p <- onRender(
+  p,
+  '
+  function(el,x){
+  // select all our node text
+  d3.select(el)
+  .selectAll(".node text")
+  .filter(function(d) { return d.name.endsWith("2021"); })
+  .attr("x", x.options.nodeWidth + 10)
+  .attr("text-anchor", "start");
+  }
+  '
+)
+
+saveNetwork(p, "sn_.html")
 #install phantom:
 webshot::install_phantomjs()
 # you convert it as png
-webshot("sn.html","/home/emily/phd/drives/phd/chapter4clustering/outputs/R/sankey_intersection.png", vwidth = 600, vheight = 900)
-
-
-tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/sankey_intersection.tex", width = 3, height = 4)
-plot(p)
-# closing the graphics device saves the file we opened with tikzDevice::tikz
-dev.off()
-path <- "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/sankey_intersection.tex"
-lines <- readLines(con=path)
-lines <- lines[-which(grepl("\\path\\[clip\\]*", lines,perl=F))]
-lines <- lines[-which(grepl("\\path\\[use as bounding box*", lines,perl=F))]
-writeLines(lines,con=path)
+webshot("sn_.html","/home/emily/phd/drives/phd/chapter4clustering/outputs/R/sankey_intersectio_n.png", vwidth = 600, vheight = 600)

@@ -1,59 +1,59 @@
 tuple,clusters_2018_keep_interesting,source,target
-"('Commercial', 'Commercial')",2161,Commercial_2011,Commercial_2021
-"('Commercial', 'High-density')",97,Commercial_2011,High-density_2021
-"('Commercial', 'Leafy green residential')",1,Commercial_2011,Leafy green residential_2021
-"('Commercial', 'Low-density')",12,Commercial_2011,Low-density_2021
-"('Commercial', 'Other green')",18,Commercial_2011,Other green_2021
-"('Commercial', 'Terraced')",31,Commercial_2011,Terraced_2021
-"('Estates', 'Commercial')",4,Estates_2011,Commercial_2021
-"('Estates', 'Estates')",4345,Estates_2011,Estates_2021
-"('Estates', 'High-density')",207,Estates_2011,High-density_2021
-"('Estates', 'Leafy green residential')",245,Estates_2011,Leafy green residential_2021
-"('Estates', 'Low-density')",814,Estates_2011,Low-density_2021
-"('Estates', 'Open green space')",4,Estates_2011,Open green space_2021
-"('Estates', 'Other green')",329,Estates_2011,Other green_2021
-"('Estates', 'Terraced')",68,Estates_2011,Terraced_2021
-"('High-density', 'Commercial')",57,High-density_2011,Commercial_2021
-"('High-density', 'Estates')",226,High-density_2011,Estates_2021
-"('High-density', 'High-density')",6089,High-density_2011,High-density_2021
-"('High-density', 'Leafy green residential')",61,High-density_2011,Leafy green residential_2021
-"('High-density', 'Low-density')",326,High-density_2011,Low-density_2021
-"('High-density', 'Other green')",14,High-density_2011,Other green_2021
-"('High-density', 'Terraced')",400,High-density_2011,Terraced_2021
-"('Leafy green residential', 'Commercial')",1,Leafy green residential_2011,Commercial_2021
-"('Leafy green residential', 'Estates')",138,Leafy green residential_2011,Estates_2021
-"('Leafy green residential', 'High-density')",69,Leafy green residential_2011,High-density_2021
-"('Leafy green residential', 'Leafy green residential')",11437,Leafy green residential_2011,Leafy green residential_2021
-"('Leafy green residential', 'Low-density')",1868,Leafy green residential_2011,Low-density_2021
-"('Leafy green residential', 'Open green space')",55,Leafy green residential_2011,Open green space_2021
-"('Leafy green residential', 'Other green')",973,Leafy green residential_2011,Other green_2021
-"('Leafy green residential', 'Terraced')",201,Leafy green residential_2011,Terraced_2021
-"('Low-density', 'Commercial')",10,Low-density_2011,Commercial_2021
-"('Low-density', 'Estates')",543,Low-density_2011,Estates_2021
-"('Low-density', 'High-density')",285,Low-density_2011,High-density_2021
-"('Low-density', 'Leafy green residential')",1711,Low-density_2011,Leafy green residential_2021
-"('Low-density', 'Low-density')",42556,Low-density_2011,Low-density_2021
-"('Low-density', 'Open green space')",4,Low-density_2011,Open green space_2021
-"('Low-density', 'Other green')",1850,Low-density_2011,Other green_2021
-"('Low-density', 'Terraced')",1085,Low-density_2011,Terraced_2021
-"('Open green space', 'High-density')",1,Open green space_2011,High-density_2021
-"('Open green space', 'Leafy green residential')",17,Open green space_2011,Leafy green residential_2021
-"('Open green space', 'Low-density')",5,Open green space_2011,Low-density_2021
-"('Open green space', 'Open green space')",11414,Open green space_2011,Open green space_2021
-"('Open green space', 'Other green')",300,Open green space_2011,Other green_2021
-"('Other green', 'Commercial')",5,Other green_2011,Commercial_2021
-"('Other green', 'Estates')",37,Other green_2011,Estates_2021
-"('Other green', 'High-density')",8,Other green_2011,High-density_2021
-"('Other green', 'Leafy green residential')",432,Other green_2011,Leafy green residential_2021
-"('Other green', 'Low-density')",292,Other green_2011,Low-density_2021
-"('Other green', 'Open green space')",492,Other green_2011,Open green space_2021
-"('Other green', 'Other green')",17346,Other green_2011,Other green_2021
-"('Other green', 'Terraced')",7,Other green_2011,Terraced_2021
-"('Terraced', 'Commercial')",7,Terraced_2011,Commercial_2021
-"('Terraced', 'Estates')",32,Terraced_2011,Estates_2021
-"('Terraced', 'High-density')",126,Terraced_2011,High-density_2021
-"('Terraced', 'Leafy green residential')",65,Terraced_2011,Leafy green residential_2021
-"('Terraced', 'Low-density')",698,Terraced_2011,Low-density_2021
-"('Terraced', 'Open green space')",1,Terraced_2011,Open green space_2021
-"('Terraced', 'Other green')",2,Terraced_2011,Other green_2021
-"('Terraced', 'Terraced')",11154,Terraced_2011,Terraced_2021
+"('Commercial', 'Commercial')",2161,Commercial_2018,Commercial_2021
+"('Commercial', 'High-density')",97,Commercial_2018,High-density_2021
+"('Commercial', 'Leafy green residential')",1,Commercial_2018,Leafy green residential_2021
+"('Commercial', 'Low-density')",12,Commercial_2018,Low-density_2021
+"('Commercial', 'Other green')",18,Commercial_2018,Other green_2021
+"('Commercial', 'Terraced')",31,Commercial_2018,Terraced_2021
+"('Estates', 'Commercial')",4,Estates_2018,Commercial_2021
+"('Estates', 'Estates')",4345,Estates_2018,Estates_2021
+"('Estates', 'High-density')",207,Estates_2018,High-density_2021
+"('Estates', 'Leafy green residential')",245,Estates_2018,Leafy green residential_2021
+"('Estates', 'Low-density')",814,Estates_2018,Low-density_2021
+"('Estates', 'Open green space')",4,Estates_2018,Open green space_2021
+"('Estates', 'Other green')",329,Estates_2018,Other green_2021
+"('Estates', 'Terraced')",68,Estates_2018,Terraced_2021
+"('High-density', 'Commercial')",57,High-density_2018,Commercial_2021
+"('High-density', 'Estates')",226,High-density_2018,Estates_2021
+"('High-density', 'High-density')",6089,High-density_2018,High-density_2021
+"('High-density', 'Leafy green residential')",61,High-density_2018,Leafy green residential_2021
+"('High-density', 'Low-density')",326,High-density_2018,Low-density_2021
+"('High-density', 'Other green')",14,High-density_2018,Other green_2021
+"('High-density', 'Terraced')",400,High-density_2018,Terraced_2021
+"('Leafy green residential', 'Commercial')",1,Leafy green residential_2018,Commercial_2021
+"('Leafy green residential', 'Estates')",138,Leafy green residential_2018,Estates_2021
+"('Leafy green residential', 'High-density')",69,Leafy green residential_2018,High-density_2021
+"('Leafy green residential', 'Leafy green residential')",11437,Leafy green residential_2018,Leafy green residential_2021
+"('Leafy green residential', 'Low-density')",1868,Leafy green residential_2018,Low-density_2021
+"('Leafy green residential', 'Open green space')",55,Leafy green residential_2018,Open green space_2021
+"('Leafy green residential', 'Other green')",973,Leafy green residential_2018,Other green_2021
+"('Leafy green residential', 'Terraced')",201,Leafy green residential_2018,Terraced_2021
+"('Low-density', 'Commercial')",10,Low-density_2018,Commercial_2021
+"('Low-density', 'Estates')",543,Low-density_2018,Estates_2021
+"('Low-density', 'High-density')",285,Low-density_2018,High-density_2021
+"('Low-density', 'Leafy green residential')",1711,Low-density_2018,Leafy green residential_2021
+"('Low-density', 'Low-density')",42556,Low-density_2018,Low-density_2021
+"('Low-density', 'Open green space')",4,Low-density_2018,Open green space_2021
+"('Low-density', 'Other green')",1850,Low-density_2018,Other green_2021
+"('Low-density', 'Terraced')",1085,Low-density_2018,Terraced_2021
+"('Open green space', 'High-density')",1,Open green space_2018,High-density_2021
+"('Open green space', 'Leafy green residential')",17,Open green space_2018,Leafy green residential_2021
+"('Open green space', 'Low-density')",5,Open green space_2018,Low-density_2021
+"('Open green space', 'Open green space')",11414,Open green space_2018,Open green space_2021
+"('Open green space', 'Other green')",300,Open green space_2018,Other green_2021
+"('Other green', 'Commercial')",5,Other green_2018,Commercial_2021
+"('Other green', 'Estates')",37,Other green_2018,Estates_2021
+"('Other green', 'High-density')",8,Other green_2018,High-density_2021
+"('Other green', 'Leafy green residential')",432,Other green_2018,Leafy green residential_2021
+"('Other green', 'Low-density')",292,Other green_2018,Low-density_2021
+"('Other green', 'Open green space')",492,Other green_2018,Open green space_2021
+"('Other green', 'Other green')",17346,Other green_2018,Other green_2021
+"('Other green', 'Terraced')",7,Other green_2018,Terraced_2021
+"('Terraced', 'Commercial')",7,Terraced_2018,Commercial_2021
+"('Terraced', 'Estates')",32,Terraced_2018,Estates_2021
+"('Terraced', 'High-density')",126,Terraced_2018,High-density_2021
+"('Terraced', 'Leafy green residential')",65,Terraced_2018,Leafy green residential_2021
+"('Terraced', 'Low-density')",698,Terraced_2018,Low-density_2021
+"('Terraced', 'Open green space')",1,Terraced_2018,Open green space_2021
+"('Terraced', 'Other green')",2,Terraced_2018,Other green_2021
+"('Terraced', 'Terraced')",11154,Terraced_2018,Terraced_2021

@@ -142,4 +142,4 @@ f.tight_layout()
 plt.show()
 
 ####### EXPORT TO R
-df.to_csv('')
+df.to_csv('chapter4clustering/outputs/R/scatter_matrix.csv')
