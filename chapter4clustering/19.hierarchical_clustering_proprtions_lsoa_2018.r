@@ -24,7 +24,7 @@ df %>%
 clusters <- hclust(dist(df[1:7])) 
 plot(clusters)
 summary(clusters)
-cluster_groups <- cutree(clusters, h=1.1) # 1.1 = 8 # 0.95 = 13
+cluster_groups <- cutree(clusters, h=1.1) # 1.1 = 8 # 0.8 = 16 # 0.7 = 23
 max(cluster_groups)
 
 df_2011_ <- read.csv('/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna.csv')
@@ -38,7 +38,7 @@ end <- end + 4829
 df_2021_$hierarchical8 <-  cluster_groups[start:end]
 
 write.csv(df_2011_, '/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna_hierarchical8_plus2018.csv')
-write.csv(df_2018_, '/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna_hierarchical8_plus2018.csv')
+write.csv(df_2018_, '/media/emily/south/phd/chapter4clustering/outputs/2018_proportions_all_nonna_hierarchical8_plus2018.csv')
 write.csv(df_2021_, '/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna_hierarchical8_plus2018.csv')
 
 df$hierarchical8 <- cluster_groups
@@ -57,6 +57,11 @@ cluster_groups_dend_ordered <-  cluster_groups[dend_ordered]
 # }
 
 dend %>%
+  color_branches(k = 23)  %>%
+  set("labels_colors", "white") -> dend
+plot(dend)
+
+dend %>%
   color_branches(clusters = as.numeric(cluster_groups_dend_ordered), col = dend_colours)  %>%
   set("labels_colors", "white") -> dend
 
@@ -67,8 +72,14 @@ png(filename="/home/emily/phd/drives/phd/chapter4clustering/outputs/R/oa_hierarc
 plot(dend,axes=TRUE, ylab='Distance', xlab='OA', cex=3)
 dev.off()
 
+c=1
+sub <- df[df$hierarchical8 == c,][,1:7]
+med <- data.frame(apply(sub, 2, median, na.rm=TRUE))
+sub_ <- t(med)
+sub_ <- cbind(a = 0, sub_)
+
 sub_df <- data.frame()
-for (i in seq(8)) {
+for (i in seq(max(cluster_groups))) {
   sub <- df[df$hierarchical8 == i,][,1:7]
   med <- data.frame(apply(sub, 2, median, na.rm=TRUE))
   sub_ <- t(med)
@@ -76,7 +87,8 @@ for (i in seq(8)) {
   sub_df <- rbind(sub_df, sub_)
 }
 sub_df$group <- as.character(sub_df$group)
-write.csv(sub_df, '/media/emily/south/phd/chapter4clustering/outputs/R/oa_median_features_for_radar.csv')
+write.csv(sub_df, '/media/emily/south/phd/chapter4clustering/outputs/R/lsoa_median_features_for_radar_hierarchical8_plus2018.csv')
+
 ########################################################################################
 library(ggradar)##
 library(tidyverse)

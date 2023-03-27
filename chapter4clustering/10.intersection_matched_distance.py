@@ -158,7 +158,7 @@ def keep_interesting(x):
     elif x in [8,9,14]:
         return "Low-density"
     elif x == 4:
-        return 'Leafy green residential'
+        return 'Leafy green'
     elif x in [1, 11]:
         return 'Open green space'
     elif x == 0:
@@ -224,3 +224,18 @@ fig.set_facecolor("w")
 
 # Save the figure
 fig.savefig("outputs/sankey_intersection_keep_interesting_14_as_ld.png", bbox_inches="tight", dpi=150)
+
+keep3['same'] = keep3.apply(lambda x: 1 if x.clusters_2018_keep_interesting == x.clusters_2021_keep_interesting else 0, axis =1)
+pivot = pd.pivot_table(keep3, values='same', index='clusters_2018_keep_interesting', columns='clusters_2021_keep_interesting',
+               aggfunc='count').reset_index()
+pivot.to_csv('chapter4clustering/outputs/R/sankey_intersection_heatmap_change.csv')
+
+
+pivot_ = pivot[pivot.columns[1:]].div(pivot[pivot.columns[1:]].sum(axis=1), axis=0)
+pivot_['clusters_2018_keep_interesting'] = pivot['clusters_2018_keep_interesting']
+pivot_ = pivot_[pivot.columns]
+
+pivot_.to_csv('chapter4clustering/outputs/R/_sankey_intersection_heatmap_change.csv')
+
+# pivot_ = pivot[pivot.columns[1:]].div(pivot[pivot.columns[1:]].sum(axis=1), axis=0)
+# pivot_.to_csv('chapter4clustering/outputs/R/_lsoa_hierarchical_cluster_change.csv')

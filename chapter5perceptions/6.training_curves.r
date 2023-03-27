@@ -45,11 +45,15 @@ g1 <- ggplot(dfm, aes(x = X, y = value)) +
 g1
 
 # here we open a tex file for output, and set hcl_palettes(palette = "set2")the plots dimensions
-tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter5perceptions/outputs/R/training_curves.tex", width = 4, height = 3)
+tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter5perceptions/outputs/R/training_curves.tex", width = 4, height = 4)
 
 # here we add a LaTeX title to the plot
 g1 <- g1 + theme(text = element_text(size =  10),
                  axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)), 
                  axis.title = element_text(size = 8),
-                 legend.text = element_text(size=6))
+                 legend.text = element_text(size= 6 ) ,
+                 legend.position = "right",
+                 legend.direction = 'vertical'
+                 )
+plot(g1)
 dev.off()

@@ -39,19 +39,24 @@ plot(dend,horiz=TRUE, axes=TRUE, xlab='Distance')
 clusters <- hclust(dist(df[1:7])) 
 plot(clusters)
 summary(clusters)
-cluster_groups <- cutree(clusters, h=1) # 1 = 8 # 0.785 = 13
+cluster_groups <- cutree(clusters, h=0.655) # 1 = 8 # 0.785 = 13 # 0.655 = 24
 max(cluster_groups)
 
-# df_2011_ <- read.csv('/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna.csv')
-# df_2021_ <- read.csv('/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna.csv')
-# df_2011_$hierarchical8 <- cluster_groups[1:4834]
-# end <- 4834+4829
-# df_2021_$hierarchical8 <-  cluster_groups[4835:end]
+df_2011_ <- read.csv('/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna.csv')
+df_2021_ <- read.csv('/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna.csv')
+df_2011_$hierarchical8 <- cluster_groups[1:4834]
+end <- 4834+4829
+df_2021_$hierarchical8 <-  cluster_groups[4835:end]
 # 
-# write.csv(df_2011_, '/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna_lsoa_hierarchical13.csv')
-# write.csv(df_2021_, '/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna_lsoa_hierarchical13.csv')
+write.csv(df_2011_, '/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna_lsoa_hierarchical24.csv')
+write.csv(df_2021_, '/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna_lsoa_hierarchical24.csv')
 
 df$hierarchical8 <- cluster_groups
+
+dend %>%
+  color_branches(k = 13)  %>%
+  set("labels_colors", "white") -> dend
+plot(dend)
 ########################################################################################
 dend_colours <- c("#0000fffd","#ff00fffd","#00fffffd","#008000fd","#ff5555fd","#25e589","#00ff00fd","#d45500fd")
 dend_colours <- c(dend_colours[5],dend_colours[2],dend_colours[1],dend_colours[3],dend_colours[7],dend_colours[4],dend_colours[8],dend_colours[6])
@@ -64,6 +69,11 @@ colormap <- numeric(9663)
 #   col_ = dend_colours[cluster]
 #   colormap[i] <- col_
 # }
+
+dend %>%
+  color_branches(k = 13)  %>%
+  set("labels_colors", "white") -> dend
+plot(dend)
 
 dend %>%
   color_branches(clusters = as.numeric(cluster_groups_dend_ordered), col = dend_colours)  %>%
@@ -91,7 +101,7 @@ sub_ <- t(med)
 sub_ <- cbind(a = 0, sub_)
 
 sub_df <- data.frame()
-for (i in seq(8)) {
+for (i in seq(max(cluster_groups))) {
   sub <- df[df$hierarchical8 == i,][,1:7]
   med <- data.frame(apply(sub, 2, median, na.rm=TRUE))
   sub_ <- t(med)
@@ -99,7 +109,8 @@ for (i in seq(8)) {
   sub_df <- rbind(sub_df, sub_)
 }
 sub_df$group <- as.character(sub_df$group)
-write.csv(sub_df, '/media/emily/south/phd/chapter4clustering/outputs/R/lsoa_median_features_for_radar.csv')
+write.csv(sub_df, '/media/emily/south/phd/chapter4clustering/outputs/R/lsoa_median_features_for_radar_hierarchical24.csv')
+# write.csv(sub_df, '/media/emily/south/phd/chapter4clustering/outputs/R/lsoa_median_features_for_radar.csv')
 
 library(ggradar)
 library(dplyr)
