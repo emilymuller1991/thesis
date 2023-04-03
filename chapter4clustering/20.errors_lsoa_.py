@@ -74,8 +74,8 @@ pivot_.to_csv('chapter4clustering/outputs/R/_lsoa_hierarchical_cluster_change.cs
 # f = plt.figure(figsize=(10, 10))
 
 # sns.heatmap(pivot[pivot.columns[1:]], annot=True, cbar=False)#
-clusters_2011 = pd.read_csv("/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna_lsoa_hierarchical13.csv")
-clusters_2021 = pd.read_csv("/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna_lsoa_hierarchical13.csv")
+clusters_2011 = pd.read_csv("/media/emily/south/phd/chapter4clustering/outputs/2011_proportions_all_nonna_lsoa_hierarchical8.csv")
+clusters_2021 = pd.read_csv("/media/emily/south/phd/chapter4clustering/outputs/2021_proportions_all_nonna_lsoa_hierarchical8.csv")
 
 
 ###################################################################################
@@ -85,4 +85,4 @@ c2021 = clusters_2021[['lsoa','hierarchical8']]
 merged = c2011.merge(c2021, left_on='lsoa', right_on='lsoa')
 merged['same'] = merged.apply(lambda x: 1 if x.hierarchical8_x == x.hierarchical8_y else 0, axis = 1)
 
-merged.to_csv("/media/emily/south/phd/chapter4clustering/outputs/both_years_proportions_all_nonna_lsoa_hierarchical13.csv")
+merged.to_csv("/media/emily/south/phd/chapter4clustering/outputs/both_years_proportions_all_nonna_lsoa_hierarchical8.csv")

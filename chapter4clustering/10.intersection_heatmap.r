@@ -32,7 +32,7 @@ g1 <- g1 + theme(text = element_text(size =  3),
                  legend.title	= element_text(size=0)
 )
 g1
-tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/sankey_intersection_heatmap_change.tex", width = 3.2, height = 3.2)
+tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/sankey_intersection_heatmap_change.tex", width = 3, height = 3)
 g1
 # closing the graphics device saves the file we opened with tikzDevice::tikz
 dev.off()
@@ -70,7 +70,7 @@ g1 <- g1 + theme(text = element_text(size =  3),
                  legend.title	= element_text(size=0)
 )
 g1
-tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/_sankey_intersection_heatmap_change.tex", width = 3.2, height = 3.2)
+tikzDevice::tikz(file = "/home/emily/phd/drives/phd/chapter4clustering/outputs/R/_sankey_intersection_heatmap_change.tex", width = 3, height = 3)
 g1
 # closing the graphics device saves the file we opened with tikzDevice::tikz
 dev.off()
