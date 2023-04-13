@@ -26,6 +26,7 @@ merged = merged.merge(df_2021_oa_grouped, on='OA11CD')
 
 merged_proportions = merged.apply(lambda x: x/x.fid, axis=1)
 merged_proportions.columns = ['points', '2011', '2018', '2021']
+
 merged_proportions.to_csv('outputs/sampling_rate_oa_all_years.csv')
 
 import matplotlib.pyplot as plt

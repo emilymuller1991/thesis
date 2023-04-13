@@ -7,6 +7,8 @@ chapter5perceptions/outputs/maps/*
 chapter5perceptions/8.inference/*
 chapter4clustering/outputs/census_2011_and_census_2021_zoom_matched.csv
 chapter4clustering/outputs/image_pairs_significant_angle_b.csv
+chapter3data/outputs/exposure_*
+chapter6substantive/source/*
 .RData
 .Rhistory
 x_corrupts.txt

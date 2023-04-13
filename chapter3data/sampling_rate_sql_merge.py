@@ -62,7 +62,7 @@ plt.ylabel('Sampling Multiplier')
 plt.savefig('outputs/sampling_rate_boxplots_zoom_sql.png',bbox_inches="tight", dpi=150)
 
 # counts in each category 
-pd.cut(merged_proportions['2011'],[0,0.5,0.75,1,20]).value_counts()
+pd.cut(merged_proportions['2011'],[-1,0,0.5,0.75,1,200]).value_counts()
 merged_proportions.hist(bins=80)
 
 ################################################### PER LSOA

@@ -41,3 +41,9 @@ merged = merged.merge(df_13[['lsoa', 'hierarchical13x']], left_on='lsoa', right_
 merged = merged.merge(df_24[['lsoa', 'hierarchical24x']], left_on='lsoa', right_on='lsoa', how='left')
 
 merged.to_csv('/home/emily/phd/drives/phd/chapter3data/outputs/exposure_NOXa_merge_hierarchicalx.csv')
+
+# mask uncertain LSOA's
+mask = pd.read_csv('chapter3data/outputs/sampling_rate_lsoa_all_years_sql.csv')
+masked = mask[mask['2021'] > 0.75]
+merged_mased = merged[merged['lsoa'].isin(masked['lsoa11cd.1'])]
+merged.to_csv('/home/emily/phd/drives/phd/chapter3data/outputs/exposure_pm10a_merge_hierarchicalx.csv')
